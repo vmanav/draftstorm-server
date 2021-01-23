@@ -1,0 +1,27 @@
+<body>
+  <form>
+    <input type="text" id="m" />
+    <input type="submit" id="submitButton" value="submit" />
+  </form>
+  <ul id="messages"></ul>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  let userName = prompt("whats your name");
+  let room = prompt("room name");
+  let ID = "";
+  var socket = io();
+
+  socket.on('connect', function () {
+
+    console.log("client side connected!");
+
+    socket.emit("joinRoom", { userName: userName, roomName: room });
+
+    socket.on('sendData', function (data) {
+      let myId = data.id;
+      console.log("myId : ", myId);
+    })
+  });
+
+</script>

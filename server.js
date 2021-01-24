@@ -2,20 +2,34 @@ const express = require('express')
 const socket = require('socket.io')
 const http = require('http')
 
-// // specifying heroku's env.PORT
-const PORT = process.env.PORT || 4848;
+// specifying heroku's env.PORT
+const PORT = process.env.PORT || 5000;
+
+const cors = require('cors');
 
 const app = express();
 
+// CORS
+app.use(cors());
+// app.use(express.json())
+// app.use(express.urlencoded({ extended: true }))
+
 const server = http.createServer(app);
 
-const io = socket(server);
+const io = socket(server
+  , {
+    cors: {
+      origin: "http://localhost:3000",
+      methods: ["GET", "POST"]
+    }
+  }
+);
 
 const { addUser, removeUser } = require('./users');
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-})
+
+// app.use('/', express.static(__dirname + '/frontend'))
+
 
 let room = "";
 
@@ -65,5 +79,5 @@ io.on('connection', (socket) => {
 
 
 server.listen(PORT, () => {
-  console.log("Listening on : http://localhost:" + PORT);
+  console.log("Listening on : http://127.0.0.1:" + PORT);
 })

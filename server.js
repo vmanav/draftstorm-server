@@ -37,22 +37,42 @@ let room = "";
 io.on('connection', (socket) => {
   console.log("User Connected : ", socket.id);
 
-
   socket.on("joinRoom", function (data) {
-    console.log("in Room : ", data.roomName);
+    console.log("joinRoom REQUEST from CLIENT : ", data);
 
-
-    let Newuser = addUser(socket.id, data.userName, data.roomName)
-    // io.to(Newuser.roomname).emit('send data', { userName: Newuser.userName, roomname: Newuser.roomname, id: socket.id })
-    // io.to(socket.id).emit('send data', { id: socket.id, userName: Newuser.userName, roomname: Newuser.roomname });
-
-    // Only send to sender
-    socket.emit('sendData', { id: socket.id, userName: Newuser.userName, roomname: Newuser.roomname });
-    thisRoom = Newuser.roomname;
-    console.log("Newuser : ", Newuser);
-    socket.join(Newuser.roomname);
+    socket.join(data.roomName);
 
   })
+
+
+  // socket.on("sendAll", function (data) {
+  //   console.log("Data Recvd. : ", data);
+
+  //   io.emit("tPortAll", {
+  //     ayaData: 'R=>' + data.msg
+  //   })
+  // })
+
+
+  // socket.on("joinRoom", function (data) {
+  //   console.log("in Room : ", data.roomName);
+
+
+  // socket.on("joinRoom", function (data) {
+  //   console.log("in Room : ", data.roomName);
+
+
+  //   let Newuser = addUser(socket.id, data.userName, data.roomName)
+  //   // io.to(Newuser.roomname).emit('send data', { userName: Newuser.userName, roomname: Newuser.roomname, id: socket.id })
+  //   // io.to(socket.id).emit('send data', { id: socket.id, userName: Newuser.userName, roomname: Newuser.roomname });
+
+  //   // Only send to sender
+  //   socket.emit('sendData', { id: socket.id, userName: Newuser.userName, roomname: Newuser.roomname });
+  //   thisRoom = Newuser.roomname;
+  //   console.log("Newuser : ", Newuser);
+  //   socket.join(Newuser.roomname);
+
+  // })
 
   // socket.on('room', function (room) {
   //   console.log("Room req : ", room)
@@ -65,9 +85,9 @@ io.on('connection', (socket) => {
 
   // });
 
-  // socket.on('disconnect', (reason) => {
-  //   console.log('user disconnected : ', reason);
-  // });
+  socket.on('disconnect', (reason) => {
+    console.log('user disconnected : ', reason);
+  });
 })
 
 

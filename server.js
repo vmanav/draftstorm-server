@@ -46,13 +46,21 @@ io.on('connection', (socket) => {
     const currUser = getUser(socket.id);
     io.to(currUser.roomName).emit('msg', { userName: currUser.userName, text: message })
     callback();
+  })
 
+  socket.on('c_mouse_down', (payload) => {
+
+    console.log("c_mouse_down paulopad RCVD : ", payload)
+    const currUser = getUser(socket.id);
+    io.to(currUser.roomName).emit('s_mouse_down', payload);
   })
 
   socket.on('disconnect', (reason) => {
-    const leavingUser = getUser(socket.id);
-    socket.broadcast.to(leavingUser.roomName).emit("userNotification", { text: `${leavingUser.userName} has Left the Room.` });
-    console.log('user disconnected : ', socket.id);
+    console.log(reason, '=> Disconnected : ', socket.id);
+    const leavingUser = removeUser(socket.id);
+    if (leavingUser) {
+      socket.broadcast.to(leavingUser.roomName).emit("userNotification", { text: `${leavingUser.userName} has Left the Room.` });
+    }
   });
 })
 

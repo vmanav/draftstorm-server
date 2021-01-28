@@ -50,12 +50,20 @@ io.on('connection', (socket) => {
 
   socket.on('c_mouse_down', (payload) => {
 
-    console.log("c_mouse_down paulopad RCVD : ", payload)
+    console.log("c_mouse_down payload RCVD : ", payload)
     const currUser = getUser(socket.id);
     io.to(currUser.roomName).emit('s_mouse_down', payload);
   })
 
+  socket.on('c_mouse_move', (payload) => {
+
+    console.log("c_mouse_move payload RCVD : ", payload)
+    const currUser = getUser(socket.id);
+    io.to(currUser.roomName).emit('s_mouse_move', payload);
+  })
+
   socket.on('disconnect', (reason) => {
+
     console.log(reason, '=> Disconnected : ', socket.id);
     const leavingUser = removeUser(socket.id);
     if (leavingUser) {

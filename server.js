@@ -41,7 +41,7 @@ io.on('connection', (socket) => {
     const { error, newUser } = addUser({ socketId: socket.id, userName, roomName });
     console.log("error : ", error);
     console.log("newUser : ", newUser);
-    // showUsers();
+    showUsers();
 
     if (error) {
       socket.emit(
@@ -92,7 +92,7 @@ io.on('connection', (socket) => {
 
     console.log(reason, '=> Disconnected : ', socket.id);
     const leavingUser = removeUser(socket.id);
-    // showUsers();
+    showUsers();
     console.log("Leaving User : ", leavingUser);
     if (leavingUser) {
       socket.broadcast.to(leavingUser.roomName).emit(

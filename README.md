@@ -25,6 +25,7 @@ The functionalities supported are stated below :
 - Room Architecture for seperate user base at real time.
 - Great choice of pallet and tools available.
 - User Entering/Leaving Room Notifications to all users.
+- Get List of active Rooms at present.
 ```
 
 ## CodeBase
@@ -67,7 +68,7 @@ The functionalities supported are stated below :
 
 ## Gallery
 
-| ![DraftStorm Demo](/public/demo.png) |
+| ![DraftStorm Demo](/public/Demo.gif) |
 | :----------------------------------: |
 |          _DraftStorm Demo_           |
 
